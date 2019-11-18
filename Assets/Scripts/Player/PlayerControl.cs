@@ -38,6 +38,17 @@ public class PlayerControl : MonoBehaviour {
             Destroy(gameObject);
         }
 	}
+
+    public void StopForBattle()
+    {
+        playerMoving = false;
+        myRigidBody.velocity = Vector2.zero;
+        anim.SetFloat("MoveX", 0f);
+        anim.SetFloat("MoveY", 0f);
+        anim.SetFloat("LastMoveY", 0f);
+        anim.SetFloat("LastMoveX", 1f);
+        anim.SetBool("PlayerMoving", playerMoving);
+    }
 	
 	// Update is called once per frame
 	void Update () {

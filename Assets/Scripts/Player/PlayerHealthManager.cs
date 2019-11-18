@@ -6,10 +6,12 @@ public class PlayerHealthManager : MonoBehaviour {
 
     public int playerMaxHealth;
     public int playerCurrentHealth;
+    public int playerCurrentDamage;
 
 	// Use this for initialization
 	void Start () {
         playerCurrentHealth = playerMaxHealth;
+        playerCurrentDamage = 5;
 	}
 	
 	// Update is called once per frame

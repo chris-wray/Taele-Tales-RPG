@@ -6,11 +6,13 @@ public class EnemyHealthManager : MonoBehaviour {
 
     public int mobMaxHealth;
     public int mobCurrentHealth;
+    public int mobDamage;
 
     // Use this for initialization
     void Start()
     {
         mobCurrentHealth = mobMaxHealth;
+        mobDamage = 5;
     }
 
     // Update is called once per frame
