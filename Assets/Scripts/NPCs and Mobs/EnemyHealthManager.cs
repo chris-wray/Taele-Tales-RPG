@@ -7,6 +7,7 @@ public class EnemyHealthManager : MonoBehaviour {
     public int mobMaxHealth;
     public int mobCurrentHealth;
     public int mobDamage;
+    public GameObject coinDrop;
 
     // Use this for initialization
     void Start()
@@ -21,6 +22,7 @@ public class EnemyHealthManager : MonoBehaviour {
         if (mobCurrentHealth <= 0)
         {
             gameObject.SetActive(false);
+            Instantiate(coinDrop, transform.position, Quaternion.identity);
         }
     }
     public void HurtEnemy(int damage)
