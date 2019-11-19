@@ -41,6 +41,7 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Debug.Log("Last Move: " + lastMove);
         playerMoving = false;
         float axisHorizontal = Input.GetAxisRaw("Horizontal");
         if (buttonHorizontal != 0) {

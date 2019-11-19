@@ -15,6 +15,8 @@ public class PlayerStartPoint : MonoBehaviour {
         thePlayer.transform.position = transform.position;
         thePlayer.lastMove = startDirection;
 
+        Debug.Log("Player Start Point: " + startDirection);
+
         theCamera = FindObjectOfType<CameraController>();
         theCamera.transform.position = new Vector3(transform.position.x, transform.position.y, theCamera.transform.position.z);
 	}
