@@ -8,10 +8,11 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     public int value; //0 = basic attack, 1 = strong attack,
     //2 = defend, 3 = flee
-    public bool isActive;
-    public BattleHandler bh;
-    public float time;
-    public Text dText;
+
+    public bool isActive; //keeps track of whether the button is held
+    public BattleHandler bh; //the active BattleHandler
+    public float time; //time the button has been held for
+    public Text dText; //the text box of the button
 
     // Start is called before the first frame update
     void Start()
@@ -21,13 +22,13 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
         switch(value)
         {
             case 0:
-                dText.text = "Attack\n You will deal " + bh.playerDamage + " damage to the enemy.";
+                dText.text = "Attack\n Deal " + bh.playerDamage + " damage to the enemy.";
                 break;
             case 1:
-                dText.text = "Strong Attack\n You will deal " + bh.playerDamage*2 + " damage to the enemy and take double.";
+                dText.text = "Strong Attack\n Deal " + bh.playerDamage*2 + " damage to the enemy, but take double damage on their next turn.";
                 break;
             case 2:
-                dText.text = "Defend\n You will only take " + bh.mobDamage/2 + " damage from the enemy.";
+                dText.text = "Defend\n Take 1/2 damage from regular attacks, and 1/3rd damage from strong attacks.";
                 break;
         }
     }
@@ -39,7 +40,7 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             time += Time.deltaTime; //subtract the time since the last frame from the time limit
             //Debug.Log(time);
-            if (time >= 2.0f)
+            if (time >= 2.0f) //if 2 seconds have passed, "click" the button, selecting that combat option
             {
                 time = 0.0f;
                 OnClick();
@@ -57,18 +58,6 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         isActive = false;
         time = 0.0f;
-        switch (value)
-        {
-            case 0:
-                dText.text = "Attack\n You will deal " + bh.playerDamage + " damage to the enemy.";
-                break;
-            case 1:
-                dText.text = "Strong Attack\n You will deal " + bh.playerDamage * 2 + " damage to the enemy and take double.";
-                break;
-            case 2:
-                dText.text = "Defend\n You will only take " + bh.mobDamage / 2 + " damage from the enemy.";
-                break;
-        }
     }
     public void OnClick()
     {

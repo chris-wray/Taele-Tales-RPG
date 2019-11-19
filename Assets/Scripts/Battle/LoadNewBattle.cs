@@ -17,8 +17,8 @@ public class LoadNewBattle : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D other){
-        DontDestroyOnLoad(gameObject); //avoid destroying the encountered monster on load
         if(other.gameObject.name == "Player"){
+            DontDestroyOnLoad(gameObject); //avoid destroying the encountered monster on load; player is already preserved
             Application.LoadLevel(levelToLoad);
         }
     }
