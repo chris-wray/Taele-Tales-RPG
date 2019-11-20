@@ -187,8 +187,9 @@ public class BattleHandler : MonoBehaviour
                 dText.text = "You won! Click the button to continue.";
                 if (playerAction == 10)
                 {
-                    player.GetComponent<PlayerControl>().enabled = true;
-                    Application.LoadLevel("main");
+                    player.GetComponent<MoneyManager>().AddMoney(enemy.GetComponent<EnemyHealthManager>().coinValue); //add the monster's value to the player's money
+                    player.GetComponent<PlayerControl>().enabled = true; //allow the player to move
+                    Application.LoadLevel("main"); //return to main
                 }
                 break;
             case 6: //if the player loses

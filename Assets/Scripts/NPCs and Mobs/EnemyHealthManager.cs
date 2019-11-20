@@ -9,6 +9,7 @@ public class EnemyHealthManager : MonoBehaviour {
     public int mobCurrentHealth;
     public int mobDamage;
     public GameObject coinDrop;
+    public int coinValue;
 
     // Use this for initialization
     void Start()

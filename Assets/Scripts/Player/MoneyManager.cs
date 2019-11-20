@@ -13,8 +13,8 @@ public class MoneyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //PlayerPrefs.SetInt("CurrentMoney", 0);
-        if (PlayerPrefs.HasKey("CurrentMoney"))
+        PlayerPrefs.SetInt("CurrentMoney", 0);
+        /*if (PlayerPrefs.HasKey("CurrentMoney"))
         {
             currentGold = PlayerPrefs.GetInt("CurrentMoney");
         }
@@ -22,7 +22,7 @@ public class MoneyManager : MonoBehaviour
         {
             currentGold = 0;
             PlayerPrefs.SetInt("CurrentMoney", 0);
-        }
+        }*/
 
         moneyText.text = "Gold: " + currentGold;
     }
