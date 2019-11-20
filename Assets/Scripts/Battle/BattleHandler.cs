@@ -184,7 +184,7 @@ public class BattleHandler : MonoBehaviour
         switch (state)
         {
             case 5: //if the player wins
-                dText.text = "You won! Click the button to continue.";
+                dText.text = "You won! You got " + enemy.GetComponent<EnemyHealthManager>().coinValue + " gold. Click the button to continue.";
                 if (playerAction == 10)
                 {
                     player.GetComponent<MoneyManager>().AddMoney(enemy.GetComponent<EnemyHealthManager>().coinValue); //add the monster's value to the player's money
