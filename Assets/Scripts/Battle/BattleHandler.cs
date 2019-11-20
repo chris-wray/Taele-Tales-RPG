@@ -8,6 +8,8 @@ public class BattleHandler : MonoBehaviour
     public GameObject dBox;
     public Text dText; //description box and text box
 
+    public GameObject EndBattleButton;
+
     GameObject player;
     GameObject enemy;
 
@@ -32,6 +34,7 @@ public class BattleHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EndBattleButton.SetActive(false);
         rand = new System.Random();
         state = 0; 
 
@@ -177,21 +180,32 @@ public class BattleHandler : MonoBehaviour
     
     void ResolveEndOfBattle()
     {
-        switch(state)
+        EndBattleButton.SetActive(true); //activates the end of battle button
+        switch (state)
         {
             case 5: //if the player wins
-                dText.text = "You won!";
-                player.GetComponent<PlayerControl>().enabled = true;
-                Application.LoadLevel("main");
+                dText.text = "You won! Click the button to continue.";
+                if (playerAction == 10)
+                {
+                    player.GetComponent<PlayerControl>().enabled = true;
+                    Application.LoadLevel("main");
+                }
                 break;
             case 6: //if the player loses
-                dText.text = "You lost.";
-                Application.LoadLevel("main");
+                dText.text = "You lost. Click the button to continue.";
+                if (playerAction == 10)
+                {
+                    Application.LoadLevel("main");
+                }
                 break;
             case 7: //if the player flees
-                dText.text = "You ran from battle.";
-                Destroy(enemy);
-                Application.LoadLevel("main");
+                dText.text = "You ran from battle. Click the button to continue.";
+                if (playerAction == 10)
+                {
+                    player.GetComponent<PlayerControl>().enabled = true;
+                    Destroy(enemy);
+                    Application.LoadLevel("main");
+                }
                 break;
             default: //in case the state isn't victory, defeat, or fleeing, and the code got here, reset state to 0 and return an error message.
                 //this should never happen.

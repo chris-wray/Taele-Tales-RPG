@@ -36,7 +36,7 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     // Update is called once per frame
     void Update()
     {
-        if ((isActive) && (bh.state==1)) //if button is held and it's the player's turn
+        if ((isActive) && ((bh.state==1)||(value==10))) //if button is held and it's the player's turn, or if this is the end battle button
         {
             time += Time.deltaTime; //subtract the time since the last frame from the time limit
             //Debug.Log(time);
