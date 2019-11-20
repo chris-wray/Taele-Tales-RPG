@@ -36,6 +36,10 @@ public class MoneyManager : MonoBehaviour
     public void AddMoney(int goldToAdd)
     {
         currentGold += goldToAdd;
+        if (currentGold < 0)
+        {
+            currentGold = 0;
+        }
         PlayerPrefs.SetInt("CurrentMoney", currentGold);
         moneyText.text = "Gold: " + currentGold;
     }
