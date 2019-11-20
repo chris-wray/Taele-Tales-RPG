@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+// Handles a player's money management
 public class MoneyManager : MonoBehaviour
 {
 

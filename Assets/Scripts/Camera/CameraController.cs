@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Makes the camera follow the player around.
 public class CameraController : MonoBehaviour {
 
     public GameObject followTarget;

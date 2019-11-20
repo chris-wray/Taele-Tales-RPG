@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Player HP Bar manager
 public class UIManager : MonoBehaviour {
 
     public Slider healthBar;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Handles player controls such as moving around, and interaction with in-game objects.
 public class PlayerControl : MonoBehaviour {
 
     public float moveSpeed;

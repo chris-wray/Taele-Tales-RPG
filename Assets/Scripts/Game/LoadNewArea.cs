@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Used to load a new area. A portal.
 public class LoadNewArea : MonoBehaviour {
 
     public string levelToLoad;
@@ -15,8 +16,8 @@ public class LoadNewArea : MonoBehaviour {
 	void Update () {
 		
 	}
-
     void OnTriggerEnter2D(Collider2D other){
+        // Detects a player collision with this portal.
         if(other.gameObject.name == "Player"){
             Debug.Log("Entering new area: " + levelToLoad);
             Application.LoadLevel(levelToLoad);

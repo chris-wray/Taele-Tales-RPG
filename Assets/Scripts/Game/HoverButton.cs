@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+// Identifies hover on movement controls.
 public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public PlayerControl playerControl;

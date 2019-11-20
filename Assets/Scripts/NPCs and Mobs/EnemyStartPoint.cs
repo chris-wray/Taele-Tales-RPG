@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Sets slimes up into their start locations.
 public class EnemyStartPoint : MonoBehaviour
 {
     private SlimeController theEnemy;

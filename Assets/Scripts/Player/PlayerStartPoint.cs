@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Handles setting the player up at the start location at the beginning of the game.
 public class PlayerStartPoint : MonoBehaviour {
 
     private PlayerControl thePlayer;
@@ -9,7 +10,7 @@ public class PlayerStartPoint : MonoBehaviour {
 
     public Vector2 startDirection;
 
-	// Use this for initialization
+	// Use this for initialization - Set the player to the start location.
 	void Start () {
         thePlayer = FindObjectOfType<PlayerControl>();
         thePlayer.transform.position = transform.position;

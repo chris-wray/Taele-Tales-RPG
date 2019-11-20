@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Controls slime enemy objects
 public class SlimeController : MonoBehaviour {
 
     public float moveSpeed;
@@ -21,7 +22,7 @@ public class SlimeController : MonoBehaviour {
     private bool reloading;
     private GameObject thePlayer;
 
-	// Use this for initialization
+	// Sets up and initializes the slimes
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
 
@@ -31,6 +32,7 @@ public class SlimeController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	// Moves a slime around for a fixed amount of time if it can.
         if (moving) {
             myRigidbody.velocity = moveDirection;
             timeToMoveCounter -= Time.deltaTime;
@@ -40,6 +42,7 @@ public class SlimeController : MonoBehaviour {
                 timeBetweenMoveCounter = Random.Range(0f, 3f);
             }
         }
+        // Waits on the ability to move for a randomized amount of time to a random location.
         else{
             myRigidbody.velocity = Vector2.zero;
             timeBetweenMoveCounter -= Time.deltaTime;
@@ -51,6 +54,7 @@ public class SlimeController : MonoBehaviour {
                 moveDirection = new Vector3(Random.Range(-1f, 1f) * moveSpeed,Random.Range(-1f, 1f) * moveSpeed, 0f);
             }
         }
+        // Waits to respawn the slime for waitToReload time.
         if (reloading){
             waitToReload -= Time.deltaTime;
             if(waitToReload < 0){
@@ -61,6 +65,7 @@ public class SlimeController : MonoBehaviour {
         }
 	}
     void OnCollisionEnter2D(Collision2D other){
+        // Detects slime collision with players.
         if(other.gameObject.name == "Player"){
             //Destroy(other.gameObject);
             /*other.gameObject.SetActive(false);
@@ -68,7 +73,7 @@ public class SlimeController : MonoBehaviour {
             thePlayer = other.gameObject;*/
         }
     }
-
+    // Stops slime movement.
     public void Stop()
     {
         moving = false;

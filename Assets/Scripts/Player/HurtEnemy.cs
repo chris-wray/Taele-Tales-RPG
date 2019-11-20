@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Originally used to cause damage to enemies with weapons.
 public class HurtEnemy : MonoBehaviour {
-
+    // Variables for handling damaging enemies.
     public int damageToGive;
     public GameObject damageBurst;
     public Transform hitPoint;
@@ -20,6 +21,7 @@ public class HurtEnemy : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D other){
+	// If the sword is colliding with an enemy, apply damage.
         if(other.gameObject.tag == "Enemy"){
             other.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(damageToGive);
             Instantiate(damageBurst, hitPoint.position, hitPoint.rotation);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Used to destroy damage text over time.
 public class DestroyOverTime : MonoBehaviour {
 
     public float timeToDestroy;

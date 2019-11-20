@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Used to allow damage numbers to float to the top of the screen before being deleted.
 public class FloatingNumbers : MonoBehaviour {
 
     public float moveSpeed;

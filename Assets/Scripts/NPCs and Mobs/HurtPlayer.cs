@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Used to detect enemy collisions with player objects.
 public class HurtPlayer : MonoBehaviour {
 
     public int damageToGive;
