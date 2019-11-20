@@ -68,4 +68,9 @@ public class SlimeController : MonoBehaviour {
             thePlayer = other.gameObject;*/
         }
     }
+
+    public void Stop()
+    {
+        moving = false;
+    }
 }
