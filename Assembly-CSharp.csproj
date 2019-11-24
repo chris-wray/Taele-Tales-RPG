@@ -78,7 +78,6 @@
     <Compile Include="Assets\Scripts\Game\UIManager.cs" />
     <Compile Include="Assets\Scripts\NPCs and Mobs\EnemyHealthManager.cs" />
     <Compile Include="Assets\Scripts\NPCs and Mobs\EnemyStartPoint.cs" />
-    <Compile Include="Assets\Scripts\NPCs and Mobs\HurtPlayer.cs" />
     <Compile Include="Assets\Scripts\NPCs and Mobs\SlimeController.cs" />
     <Compile Include="Assets\Scripts\Player\GoldPickup.cs" />
     <Compile Include="Assets\Scripts\Player\HurtEnemy.cs" />

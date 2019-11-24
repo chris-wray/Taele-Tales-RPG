@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadNewBattle : MonoBehaviour {
 
@@ -27,6 +28,10 @@ public class LoadNewBattle : MonoBehaviour {
         if(other.gameObject.name == "Player"){
             DontDestroyOnLoad(gameObject); //avoid destroying the encountered monster on load; player is already preserved
             thePlayer.startPointName = exitPoint;
+            thePlayer.prevScene = SceneManager.GetActiveScene().name;
+            thePlayer.prevPos = thePlayer.transform.position;
+            thePlayer.prevDirection = thePlayer.lastMove;
+
             diffMan.difficultyPanel.SetActive(false);
             Application.LoadLevel(levelToLoad);
         }

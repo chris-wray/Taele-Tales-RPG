@@ -27,6 +27,11 @@ public class PlayerControl : MonoBehaviour {
     // Name of the starting point on the new scene
     public string startPointName;
 
+    // Stores position and scene prior to a battle
+    public string prevScene;
+    public Vector3 prevPos;
+    public Vector2 prevDirection;
+    
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
