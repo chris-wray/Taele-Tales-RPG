@@ -24,6 +24,9 @@ public class PlayerControl : MonoBehaviour {
     public float buttonHorizontal;
     public float buttonVertical;
 
+    // Name of the starting point on the new scene
+    public string startPointName;
+
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();

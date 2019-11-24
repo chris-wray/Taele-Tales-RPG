@@ -31,6 +31,8 @@ public class BattleHandler : MonoBehaviour
 
     public bool preparingAttack; //keeps track of whether the monster is preparing a strong attack
 
+    DifficultyManager diffMan;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +56,8 @@ public class BattleHandler : MonoBehaviour
         //enemy.GetComponent<SlimeController>().enabled = false;
         //dText.text = "Enemy Health: " + enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth;
         preparingAttack = false;
+
+        diffMan = FindObjectOfType<DifficultyManager>();
     }
 
 
@@ -181,6 +185,7 @@ public class BattleHandler : MonoBehaviour
     void ResolveEndOfBattle()
     {
         EndBattleButton.SetActive(true); //activates the end of battle button
+        player.GetComponent<PlayerControl>().startPointName = "Battle Out";
         switch (state)
         {
             case 5: //if the player wins
@@ -190,6 +195,7 @@ public class BattleHandler : MonoBehaviour
                     player.GetComponent<MoneyManager>().AddMoney(enemy.GetComponent<EnemyHealthManager>().coinValue); //add the monster's value to the player's money
                     player.GetComponent<PlayerControl>().enabled = true; //allow the player to move
                     Application.LoadLevel("main"); //return to main
+                    diffMan.difficultyPanel.SetActive(true);
                 }
                 break;
             case 6: //if the player loses
@@ -197,6 +203,7 @@ public class BattleHandler : MonoBehaviour
                 if (playerAction == 10)
                 {
                     Application.LoadLevel("main");
+                    diffMan.difficultyPanel.SetActive(true);
                 }
                 break;
             case 7: //if the player flees
@@ -205,6 +212,7 @@ public class BattleHandler : MonoBehaviour
                 {
                     player.GetComponent<PlayerControl>().enabled = true;
                     Destroy(enemy);
+                    diffMan.difficultyPanel.SetActive(true);
                     Application.LoadLevel("main");
                 }
                 break;

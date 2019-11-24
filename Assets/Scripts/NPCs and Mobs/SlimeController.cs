@@ -28,6 +28,7 @@ public class SlimeController : MonoBehaviour {
 
         timeBetweenMoveCounter = timeBetweenMove;
         timeToMoveCounter = timeToMove;
+        thePlayer = GameObject.FindWithTag("Player");
 	}
 	
 	// Update is called once per frame
