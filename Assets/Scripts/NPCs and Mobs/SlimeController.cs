@@ -28,6 +28,12 @@ public class SlimeController : MonoBehaviour {
 
         timeBetweenMoveCounter = timeBetweenMove;
         timeToMoveCounter = timeToMove;
+        thePlayer = GameObject.FindWithTag("Player");
+
+        if (Vector3.Distance(thePlayer.transform.position, gameObject.transform.position) < 5)
+        {
+            gameObject.SetActive(false);
+        }
 	}
 	
 	// Update is called once per frame

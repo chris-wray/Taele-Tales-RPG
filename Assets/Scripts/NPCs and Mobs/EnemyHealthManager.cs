@@ -11,21 +11,29 @@ public class EnemyHealthManager : MonoBehaviour {
     public GameObject coinDrop;
     public int coinValue;
 
+    DifficultyManager diffMan;
+
     // Use this for initialization
     void Start()
     {
         mobCurrentHealth = mobMaxHealth;
         mobDamage = 5;
+
+        // If game is on peaceful, kills the enemy
+        diffMan = FindObjectOfType<DifficultyManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
 	// Check if this monster has died.
-        if (mobCurrentHealth <= 0)
+        if (mobCurrentHealth <= 0 || diffMan.difficultyLevel == "Peaceful")
         {
             gameObject.SetActive(false);
-            Instantiate(coinDrop, transform.position, Quaternion.identity);
+            if (diffMan.difficultyLevel != "Peaceful")
+            {
+                Instantiate(coinDrop, transform.position, Quaternion.identity);
+            }
         }
     }
     // Used by weapons to damage the enemy.

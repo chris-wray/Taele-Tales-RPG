@@ -11,11 +11,12 @@ public class BattleHandler : MonoBehaviour
     public GameObject EndBattleButton;
 
     GameObject player;
+    PlayerControl playerControl;
     GameObject enemy;
 
     public int state; //0 = start, 1 = player turn, 
     //2 = player animations, 3 = enemy turn, 
-    //4 = enemy animations, 5 = player win, 
+    //4 = enemy animations, 5 = player win,  player.GetComponent<PlayerControl>()
     //6 = enemy win, 7 = flee;
 
     public int playerAction; //0 = attack, 1 = strong attack,
@@ -31,6 +32,8 @@ public class BattleHandler : MonoBehaviour
 
     public bool preparingAttack; //keeps track of whether the monster is preparing a strong attack
 
+    DifficultyManager diffMan;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +44,10 @@ public class BattleHandler : MonoBehaviour
         //find the player object, which should be preserved from the previous scene
         player = GameObject.FindWithTag("Player");
         //make the player stop moving for the battle:
-        player.GetComponent<PlayerControl>().StopForBattle();
-        player.GetComponent<PlayerControl>().enabled = false;
+        playerControl = player.GetComponent<PlayerControl>();
+        playerControl.StopForBattle();
+        playerControl.enabled = false;
+
         playerDamage = player.GetComponent<PlayerHealthManager>().playerCurrentDamage;
 
         playerAction = 4;
@@ -54,6 +59,8 @@ public class BattleHandler : MonoBehaviour
         //enemy.GetComponent<SlimeController>().enabled = false;
         //dText.text = "Enemy Health: " + enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth;
         preparingAttack = false;
+
+        diffMan = FindObjectOfType<DifficultyManager>();
     }
 
 
@@ -178,9 +185,24 @@ public class BattleHandler : MonoBehaviour
         state++;
     }
     
+    // Reloads the scene prior to the battle
+    void ReloadOverworld()
+    {
+       playerControl.enabled = true; //allow the player to move
+        Application.LoadLevel(player.GetComponent<PlayerControl>().prevScene); //return to previous scene
+        diffMan.difficultyPanel.SetActive(true);
+
+        playerControl.transform.position = playerControl.prevPos;
+        playerControl.lastMove = playerControl.prevDirection;
+
+        var theCamera = FindObjectOfType<CameraController>();
+        theCamera.transform.position = new Vector3(playerControl.transform.position.x, playerControl.transform.position.y, theCamera.transform.position.z);
+    }
+
     void ResolveEndOfBattle()
     {
         EndBattleButton.SetActive(true); //activates the end of battle button
+       playerControl.startPointName = "Battle Out";
         switch (state)
         {
             case 5: //if the player wins
@@ -188,24 +210,24 @@ public class BattleHandler : MonoBehaviour
                 if (playerAction == 10)
                 {
                     player.GetComponent<MoneyManager>().AddMoney(enemy.GetComponent<EnemyHealthManager>().coinValue); //add the monster's value to the player's money
-                    player.GetComponent<PlayerControl>().enabled = true; //allow the player to move
-                    Application.LoadLevel("main"); //return to main
+                    ReloadOverworld();
                 }
                 break;
             case 6: //if the player loses
                 dText.text = "You lost. Click the button to continue.";
                 if (playerAction == 10)
                 {
-                    Application.LoadLevel("main");
+                    // TODO replace with a proper end screen
+                    Application.LoadLevel(player.GetComponent<PlayerControl>().prevScene); //return to previous scene
+                    diffMan.difficultyPanel.SetActive(true);
                 }
                 break;
             case 7: //if the player flees
                 dText.text = "You ran from battle. Click the button to continue.";
                 if (playerAction == 10)
                 {
-                    player.GetComponent<PlayerControl>().enabled = true;
                     Destroy(enemy);
-                    Application.LoadLevel("main");
+                    ReloadOverworld();
                 }
                 break;
             default: //in case the state isn't victory, defeat, or fleeing, and the code got here, reset state to 0 and return an error message.
