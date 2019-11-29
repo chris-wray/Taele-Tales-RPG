@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelOpener : MonoBehaviour
+public class ClosePanel : MonoBehaviour
 {
-
     public GameObject Panel;
-    public GameObject CloseButton;
+    public GameObject Button;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +19,12 @@ public class PanelOpener : MonoBehaviour
         
     }
 
-    public void OpenPanel()
+    public void ClosingPanel()
     {
-        if(Panel != null)
+        if (Panel != null)
         {
-            bool isActive = Panel.activeSelf;
-            Panel.SetActive(!isActive);
-            CloseButton.SetActive(!isActive);
+            Panel.SetActive(false);
+            Button.SetActive(false);
         }
     }
 }
