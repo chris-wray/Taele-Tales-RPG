@@ -13,6 +13,7 @@ public class BattleHandler : MonoBehaviour
     GameObject player;
     PlayerControl playerControl;
     GameObject enemy;
+    public int playerDefense;
 
     public int state; //0 = start, 1 = player turn, 
     //2 = player animations, 3 = enemy turn, 
@@ -49,6 +50,7 @@ public class BattleHandler : MonoBehaviour
         playerControl.enabled = false;
 
         playerDamage = player.GetComponent<PlayerHealthManager>().playerCurrentDamage;
+        playerDefense = player.GetComponent<PlayerHealthManager>().playerCurrentDefense;
 
         playerAction = 4;
 
@@ -142,16 +144,16 @@ public class BattleHandler : MonoBehaviour
             {
 
                 case 0:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + mobDamage * 3 + " damage to you.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage * 3);
+                    dText.text = "The enemy attacks you with a strong attack! It deals " + (mobDamage - playerDefense) * 3 + " damage to you.";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 3);
                     break;
                 case 1:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + mobDamage * 6 + " damage to you. Ouch!";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage * 6);
+                    dText.text = "The enemy attacks you with a strong attack! It deals " + (mobDamage - playerDefense) * 6 + " damage to you. Ouch!";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 6);
                     break;
                 case 2:
-                    dText.text = "The enemy attacks you! It deals " + mobDamage + " damage to you, through your defense.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage);
+                    dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) + " damage to you, through your defense.";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense));
                     break;
             }
         }
@@ -163,16 +165,16 @@ public class BattleHandler : MonoBehaviour
                     switch (prevAction) //depending on the player's previous action, a normal attack does varying damage.
                     {
                         case 0:
-                            dText.text = "The enemy attacks you! It deals " + mobDamage + " damage to you.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage);
+                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) + " damage to you.";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense));
                             break;
                         case 1:
-                            dText.text = "The enemy attacks you! It deals " + mobDamage * 2 + " damage to you. Ouch!";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage * 2);
+                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) * 2 + " damage to you. Ouch!";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 2);
                             break;
                         case 2:
-                            dText.text = "The enemy attacks you! It deals " + mobDamage / 2 + " damage to you, through your defense.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(mobDamage / 2);
+                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) / 2 + " damage to you, through your defense.";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) / 2);
                             break;
                     }
                     break;
