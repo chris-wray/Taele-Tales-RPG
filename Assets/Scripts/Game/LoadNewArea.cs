@@ -8,6 +8,9 @@ public class LoadNewArea : MonoBehaviour {
     public string levelToLoad;
     public string exitPoint;
 
+    public AudioClip DoorSound;
+    public AudioSource audioSource;
+
     public PlayerControl thePlayer;
     DifficultyManager diffMan;
 
@@ -27,6 +30,10 @@ public class LoadNewArea : MonoBehaviour {
             Debug.Log("Entering new area: " + levelToLoad);
             thePlayer.startPointName = exitPoint;
             Application.LoadLevel(levelToLoad);
+
+            audioSource.clip = DoorSound;
+            audioSource.Play();
+
         }
     }
 }
