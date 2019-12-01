@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class RefillHealth : MonoBehaviour
 {
+
+    public AudioClip FailSound;
+    public AudioClip SuccessSound;
+    public AudioSource audioSource;
+
     MoneyManager money;
     public GameObject player;
     // Start is called before the first frame update
@@ -22,11 +27,21 @@ public class RefillHealth : MonoBehaviour
 
     public void Refill()
     {
-        Debug.Log("refill");
+
+
         if (money.currentGold >= 5)
         {
+            Debug.Log("refill success");
+            audioSource.clip = SuccessSound;
             money.AddMoney(-5);
             player.GetComponent<PlayerHealthManager>().setMaxHealth();
         }
+        else
+        {
+            Debug.Log("refill failed");
+            audioSource.clip = FailSound;
+        }
+        audioSource.Play();
+
     }
 }
