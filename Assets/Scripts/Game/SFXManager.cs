@@ -10,6 +10,7 @@ public class SFXManager : MonoBehaviour
     public AudioSource PurchaseDenied;
     public AudioSource ButtonClick;
     public AudioSource PlayerHurt;
+    public AudioSource SlimeHurt;
 
     private static bool sfxManExists;
 

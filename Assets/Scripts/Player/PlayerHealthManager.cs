@@ -10,11 +10,14 @@ public class PlayerHealthManager : MonoBehaviour {
     public int playerCurrentDamage;
     public int playerCurrentDefense;
 
+    private SFXManager sfxMan;
+
 	// Use this for initialization
 	void Start () {
         playerCurrentHealth = playerMaxHealth;
         playerCurrentDamage = 5;
         playerCurrentDefense = 0;
+        sfxMan = FindObjectOfType<SFXManager>();
 	}
 	
 	// Update is called once per frame
@@ -27,6 +30,7 @@ public class PlayerHealthManager : MonoBehaviour {
     // API used by monsters to damage a player.	
     public void HurtPlayer(int damage){
         playerCurrentHealth -= damage;
+        sfxMan.PlayerHurt.Play();
     }
     // API used to revive player.
     public void setMaxHealth(){

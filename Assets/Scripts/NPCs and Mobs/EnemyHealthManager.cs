@@ -11,6 +11,8 @@ public class EnemyHealthManager : MonoBehaviour {
     public GameObject coinDrop;
     public int coinValue;
 
+    private SFXManager sfxMan;
+
     DifficultyManager diffMan;
 
     // Use this for initialization
@@ -21,6 +23,7 @@ public class EnemyHealthManager : MonoBehaviour {
 
         // If game is on peaceful, kills the enemy
         diffMan = FindObjectOfType<DifficultyManager>();
+        sfxMan = FindObjectOfType<SFXManager>();
     }
 
     // Update is called once per frame
@@ -39,6 +42,7 @@ public class EnemyHealthManager : MonoBehaviour {
     // Used by weapons to damage the enemy.
     public void HurtEnemy(int damage)
     {
+        sfxMan.SlimeHurt.Play();
         mobCurrentHealth -= damage;
     }
     // Used to revive an object rather than making a new one.
