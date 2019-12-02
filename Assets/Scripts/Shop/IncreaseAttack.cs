@@ -5,13 +5,13 @@ using UnityEngine;
 public class IncreaseAttack : MonoBehaviour
 {
 
-    public AudioClip FailSound;
-    public AudioClip SuccessSound;
-    public AudioSource audioSource;
+    private SFXManager sfxMan;
 
     MoneyManager money;
     public GameObject player;
     PlayerHealthManager healthManager;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,7 @@ public class IncreaseAttack : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         money = player.GetComponent<MoneyManager>();
         healthManager = player.GetComponent<PlayerHealthManager>();
+        sfxMan = FindObjectOfType<SFXManager>();
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class IncreaseAttack : MonoBehaviour
         if (money.currentGold >= 3)
         {
             Debug.Log("increase attack");
-            audioSource.clip = SuccessSound;
+            sfxMan.PurchaseAccepted.Play();
 
             money.AddMoney(-3);
             // increase playerCurrentDamage by 1; max health of mob is 15, max health of big mob is 25
@@ -42,9 +43,8 @@ public class IncreaseAttack : MonoBehaviour
         else
         {
             Debug.Log("increase attack failed");
-            audioSource.clip = FailSound;
+            sfxMan.PurchaseDenied.Play();
         }
-        audioSource.Play();
         
     }
 }

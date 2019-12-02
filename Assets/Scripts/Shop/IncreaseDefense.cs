@@ -5,9 +5,7 @@ using UnityEngine;
 public class IncreaseDefense : MonoBehaviour
 {
 
-    public AudioClip FailSound;
-    public AudioClip SuccessSound;
-    public AudioSource audioSource;
+    private SFXManager sfxMan;
 
     MoneyManager money;
     public GameObject player;
@@ -19,6 +17,7 @@ public class IncreaseDefense : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         money = player.GetComponent<MoneyManager>();
         healthManager = player.GetComponent<PlayerHealthManager>();
+        sfxMan = FindObjectOfType<SFXManager>();
     }
 
     // Update is called once per frame
@@ -34,7 +33,7 @@ public class IncreaseDefense : MonoBehaviour
         {
             Debug.Log("increase defense");
 
-            audioSource.clip = SuccessSound;
+            sfxMan.PurchaseAccepted.Play();
             money.AddMoney(-3);
             // increase playerCurrentDamage by 1; max damage of mob is 5, max damage of big mob is 10
             // if you want to check for that and then not allow player to purchase increase defense anymore
@@ -44,9 +43,8 @@ public class IncreaseDefense : MonoBehaviour
         else
         {
             Debug.Log("increase defense failed");
-            audioSource.clip = FailSound;
+            sfxMan.PurchaseDenied.Play();
         }
-        audioSource.Play();
 
     }
 }

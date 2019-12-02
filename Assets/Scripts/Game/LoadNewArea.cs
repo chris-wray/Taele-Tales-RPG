@@ -8,8 +8,7 @@ public class LoadNewArea : MonoBehaviour {
     public string levelToLoad;
     public string exitPoint;
 
-    public AudioClip DoorSound;
-    public AudioSource audioSource;
+    private SFXManager sfxMan;
 
     public PlayerControl thePlayer;
     DifficultyManager diffMan;
@@ -18,6 +17,7 @@ public class LoadNewArea : MonoBehaviour {
 	void Start () {
         thePlayer = FindObjectOfType<PlayerControl>();
         diffMan = FindObjectOfType<DifficultyManager>();
+        sfxMan = FindObjectOfType<SFXManager>();
 	}
 	
 	// Update is called once per frame
@@ -30,9 +30,6 @@ public class LoadNewArea : MonoBehaviour {
             Debug.Log("Entering new area: " + levelToLoad);
             thePlayer.startPointName = exitPoint;
             Application.LoadLevel(levelToLoad);
-
-            audioSource.clip = DoorSound;
-            audioSource.Play();
 
         }
     }

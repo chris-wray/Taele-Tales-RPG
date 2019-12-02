@@ -7,11 +7,13 @@ public class DifficultyManager : MonoBehaviour
 {
     public string difficultyLevel;
     public GameObject difficultyPanel;
+    private SFXManager sfxMan;
 
     // Start is called before the first frame update
     void Start()
     {
         difficultyLevel = "Normal";
+        sfxMan = FindObjectOfType<SFXManager>();
     }
 
     // Update is called once per frame
@@ -23,5 +25,6 @@ public class DifficultyManager : MonoBehaviour
     {
         Debug.Log("Called ChangeDifficulty");
         difficultyLevel = newDifficulty;
+        sfxMan.ButtonClick.Play();
     }
 }

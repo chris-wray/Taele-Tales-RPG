@@ -10,6 +10,8 @@ public class RefillHealth : MonoBehaviour
     public AudioClip SuccessSound;
     public AudioSource audioSource;
 
+    private SFXManager sfxMan;
+
     MoneyManager money;
     public GameObject player;
     // Start is called before the first frame update
@@ -17,6 +19,7 @@ public class RefillHealth : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         money = player.GetComponent<MoneyManager>();
+        sfxMan = FindObjectOfType<SFXManager>();
     }
 
     // Update is called once per frame
@@ -32,14 +35,14 @@ public class RefillHealth : MonoBehaviour
         if (money.currentGold >= 5)
         {
             Debug.Log("refill success");
-            audioSource.clip = SuccessSound;
+            sfxMan.PurchaseAccepted.Play();
             money.AddMoney(-5);
             player.GetComponent<PlayerHealthManager>().setMaxHealth();
         }
         else
         {
             Debug.Log("refill failed");
-            audioSource.clip = FailSound;
+            sfxMan.PurchaseDenied.Play();
         }
         audioSource.Play();
 
