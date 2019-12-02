@@ -204,7 +204,7 @@ public class BattleHandler : MonoBehaviour
     void ResolveEndOfBattle()
     {
         EndBattleButton.SetActive(true); //activates the end of battle button
-       playerControl.startPointName = "Battle Out";
+        playerControl.startPointName = "Battle Out";
         switch (state)
         {
             case 5: //if the player wins

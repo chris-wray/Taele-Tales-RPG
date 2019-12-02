@@ -28,7 +28,7 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 dText.text = "Strong Attack\n Deal " + bh.playerDamage*2 + " damage to the enemy, but take double damage on their next turn.";
                 break;
             case 2:
-                dText.text = "Defend\n Take 1/2 damage from regular attacks, and 1/3rd damage from strong attacks.";
+                dText.text = "Defend\n Take less damage from incoming attacks.";
                 break;
         }
     }
