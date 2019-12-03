@@ -14,15 +14,7 @@ public class EnemyHPBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!UIExists)
-        {
-            mobHealth = GameObject.FindWithTag("Enemy").GetComponent<EnemyHealthManager>();
-            UIExists = true;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        mobHealth = GameObject.FindWithTag("Enemy").GetComponent<EnemyHealthManager>();
     }
 
     // Update is called once per frame
