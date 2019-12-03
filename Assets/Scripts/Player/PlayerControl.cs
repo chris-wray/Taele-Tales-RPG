@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour {
 
     public float moveSpeed;
+    public float clickSpeed;
 
     private Animator anim;
     private Rigidbody2D myRigidBody;
@@ -121,4 +122,11 @@ public class PlayerControl : MonoBehaviour {
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetBool("PlayerMoving", playerMoving);
 	}
+
+        public void AdjustMoveSpeed(float newSpeed){
+            moveSpeed = newSpeed;
+        }
+        public void AdjustClickSpeed(float newSpeed){
+            clickSpeed = newSpeed;
+        }
 }
