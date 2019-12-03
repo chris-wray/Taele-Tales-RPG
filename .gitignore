@@ -58,3 +58,8 @@ crashlytics-build.properties
 .vs/
  End of https://www.gitignore.io/api/unity,csharp,windows,visualstudio
 .DS_Store
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp.csproj
+Assets/Audio.meta
+ProjectSettings/ProjectVersion.txt
