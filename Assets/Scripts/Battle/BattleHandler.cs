@@ -93,6 +93,10 @@ public class BattleHandler : MonoBehaviour
                 ResolveEndOfBattle();
                 break;
         }
+        if(player.GetComponent<PlayerHealthManager>().playerCurrentHealth <= 0) //if player is dead, set state to 6, where player has lost
+        {
+            state = 6;
+        }
     }
 
     void ResolvePlayerTurn()
@@ -216,12 +220,19 @@ public class BattleHandler : MonoBehaviour
                 }
                 break;
             case 6: //if the player loses
-                dText.text = "You lost. Click the button to continue.";
+                dText.text = "You lost. Click the button to close the game.";
                 if (playerAction == 10)
                 {
                     // TODO replace with a proper end screen
-                    Application.LoadLevel(player.GetComponent<PlayerControl>().prevScene); //return to previous scene
-                    diffMan.difficultyPanel.SetActive(true);
+                    #if UNITY_EDITOR
+                    // Application.Quit() does not work in the editor so
+                    // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+                        UnityEditor.EditorApplication.isPlaying = false;
+                    #else
+                        Application.Quit();
+                    #endif
+                    //Application.LoadLevel(player.GetComponent<PlayerControl>().prevScene); //return to previous scene
+                    //diffMan.difficultyPanel.SetActive(true);
                 }
                 break;
             case 7: //if the player flees
