@@ -31,4 +31,8 @@ public class UIManager : MonoBehaviour {
         healthBar.value = playerHealth.playerCurrentHealth;
         HPText.text = "HP: " + healthBar.value + "/" + healthBar.maxValue;
 	}
+
+	public void QuitGame(){
+		Application.Quit();
+	}
 }

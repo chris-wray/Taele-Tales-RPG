@@ -63,3 +63,4 @@ Assembly-CSharp-Editor.csproj
 Assembly-CSharp.csproj
 Assets/Audio.meta
 ProjectSettings/ProjectVersion.txt
+Assets/quit.cs
