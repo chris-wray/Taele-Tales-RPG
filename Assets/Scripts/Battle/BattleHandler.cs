@@ -13,7 +13,6 @@ public class BattleHandler : MonoBehaviour
     GameObject player;
     PlayerControl playerControl;
     GameObject enemy;
-    public int playerDefense;
 
     public int state; //0 = start, 1 = player turn, 
     //2 = player animations, 3 = enemy turn, 
@@ -28,6 +27,8 @@ public class BattleHandler : MonoBehaviour
 
     public int mobDamage;
     public int playerDamage; //integers to locally track the monster's and player's damage
+    public int playerDefense;
+    public int netDamage;//integer to store monster's damage minus player's defense, or 0 if it would be negative
 
     System.Random rand;//RNG to determine monster actions
 
@@ -63,6 +64,11 @@ public class BattleHandler : MonoBehaviour
         preparingAttack = false;
 
         diffMan = FindObjectOfType<DifficultyManager>();
+        netDamage = mobDamage - playerDefense;
+        if(netDamage < 0)
+        {
+            netDamage = 0;
+        }
     }
 
 
@@ -148,16 +154,16 @@ public class BattleHandler : MonoBehaviour
             {
 
                 case 0:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + (mobDamage - playerDefense) * 3 + " damage to you.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 3);
+                    dText.text = "The enemy attacks you with a strong attack! It deals " + netDamage * 3 + " damage to you.";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 3);
                     break;
                 case 1:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + (mobDamage - playerDefense) * 6 + " damage to you. Ouch!";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 6);
+                    dText.text = "The enemy attacks you with a strong attack! It deals " + netDamage * 6 + " damage to you. Ouch!";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 6);
                     break;
                 case 2:
-                    dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) + " damage to you, through your defense.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense));
+                    dText.text = "The enemy attacks you! It deals " + netDamage + " damage to you, through your defense.";
+                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage);
                     break;
             }
         }
@@ -169,16 +175,16 @@ public class BattleHandler : MonoBehaviour
                     switch (prevAction) //depending on the player's previous action, a normal attack does varying damage.
                     {
                         case 0:
-                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) + " damage to you.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense));
+                            dText.text = "The enemy attacks you! It deals " + netDamage + " damage to you.";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage);
                             break;
                         case 1:
-                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) * 2 + " damage to you. Ouch!";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) * 2);
+                            dText.text = "The enemy attacks you! It deals " + netDamage * 2 + " damage to you. Ouch!";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 2);
                             break;
                         case 2:
-                            dText.text = "The enemy attacks you! It deals " + (mobDamage - playerDefense) / 2 + " damage to you, through your defense.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer((mobDamage - playerDefense) / 2);
+                            dText.text = "The enemy attacks you! It deals " + netDamage / 2 + " damage to you, through your defense.";
+                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage / 2);
                             break;
                     }
                     break;

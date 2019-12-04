@@ -78,6 +78,8 @@
     <Compile Include="Assets\Scripts\Game\HoverButton.cs" />
     <Compile Include="Assets\Scripts\Game\LoadFromMenu.cs" />
     <Compile Include="Assets\Scripts\Game\LoadNewArea.cs" />
+    <Compile Include="Assets\Scripts\Game\MusicController.cs" />
+    <Compile Include="Assets\Scripts\Game\MusicSwitcher.cs" />
     <Compile Include="Assets\Scripts\Game\Quit.cs" />
     <Compile Include="Assets\Scripts\Game\SFXManager.cs" />
     <Compile Include="Assets\Scripts\Game\UIManager.cs" />
