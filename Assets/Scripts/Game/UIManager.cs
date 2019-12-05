@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour {
 
     public Slider healthBar;
     public Text HPText;
+    public Text attackText;
+    public Text defenseText;
     public PlayerHealthManager playerHealth;
 
     private static bool UIExists;
@@ -30,7 +32,9 @@ public class UIManager : MonoBehaviour {
         healthBar.maxValue = playerHealth.playerMaxHealth;
         healthBar.value = playerHealth.playerCurrentHealth;
         HPText.text = "HP: " + healthBar.value + "/" + healthBar.maxValue;
-	}
+        attackText.text = "DMG: " + playerHealth.playerCurrentDamage;
+        defenseText.text = "DEF: " + playerHealth.playerCurrentDefense;
+    }
 
 	public void QuitGame(){
 		Application.Quit();
