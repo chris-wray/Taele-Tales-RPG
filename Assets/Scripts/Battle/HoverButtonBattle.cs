@@ -40,7 +40,7 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             time += Time.deltaTime; //subtract the time since the last frame from the time limit
             //Debug.Log(time);
-            if (time >= 2.0f) //if 2 seconds have passed, "click" the button, selecting that combat option
+            if (time >= PlayerControl.clickSpeed) //if n seconds have passed, "click" the button, selecting that combat option
             {
                 time = 0.0f;
                 OnClick();
