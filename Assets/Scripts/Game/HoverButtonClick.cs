@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 // General purpose script that invokes a button press when hovered for long enough
 public class HoverButtonClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public bool isActive; //keeps track of whether the button is held
-    public float time; //time the button has been held for
+    bool isActive; //keeps track of whether the button is held
+    float time; //time the button has been held for
     public Button button;
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,6 @@ public class HoverButtonClick : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (transform.gameObject.activeSelf) //Only activate if button is currently active
         {
-            Debug.Log("Triggered");
             isActive = true;
         }
     }

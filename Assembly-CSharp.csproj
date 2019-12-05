@@ -81,7 +81,6 @@
     <Compile Include="Assets\Scripts\Game\MusicController.cs" />
     <Compile Include="Assets\Scripts\Game\MusicSwitcher.cs" />
     <Compile Include="Assets\Scripts\Game\Quit.cs" />
-    <Compile Include="Assets\Scripts\Game\Settings.cs" />
     <Compile Include="Assets\Scripts\Game\SFXManager.cs" />
     <Compile Include="Assets\Scripts\Game\Tutorial.cs" />
     <Compile Include="Assets\Scripts\Game\UIManager.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerHealthManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStartPoint.cs" />
+    <Compile Include="Assets\Scripts\Settings\SensitivitySliderManager.cs" />
     <Compile Include="Assets\Scripts\Shop\ClosePanel.cs" />
     <Compile Include="Assets\Scripts\Shop\IncreaseAttack.cs" />
     <Compile Include="Assets\Scripts\Shop\IncreaseDefense.cs" />

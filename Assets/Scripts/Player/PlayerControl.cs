@@ -5,7 +5,7 @@ using UnityEngine;
 // Handles player controls such as moving around, and interaction with in-game objects.
 public class PlayerControl : MonoBehaviour {
 
-    public float moveSpeed;
+    public static float moveSpeed = 5;
     public static float clickSpeed = 1;
 
     private Animator anim;
@@ -123,10 +123,10 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("PlayerMoving", playerMoving);
 	}
 
-        public void AdjustMoveSpeed(float newSpeed){
+        public static void AdjustMoveSpeed(float newSpeed){
             moveSpeed = newSpeed;
         }
-        public void AdjustClickSpeed(float newSpeed){
+        public static void AdjustClickSpeed(float newSpeed){
             clickSpeed = 1/newSpeed;
         }
 }
