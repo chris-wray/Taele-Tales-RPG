@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 // Player HP Bar manager
 public class UIManager : MonoBehaviour {
-
     public Slider healthBar;
+    public Slider manaBar;
+
     public Text HPText;
+    public Text manaText;
     public Text attackText;
     public Text defenseText;
+
     public PlayerHealthManager playerHealth;
 
     private static bool UIExists;
@@ -31,8 +34,14 @@ public class UIManager : MonoBehaviour {
 	void Update () {
         healthBar.maxValue = playerHealth.playerMaxHealth;
         healthBar.value = playerHealth.playerCurrentHealth;
+
+        healthBar.maxValue = playerHealth.playerMaxHealth;
+        healthBar.value = playerHealth.playerCurrentHealth;
+
+
         HPText.text = "HP: " + healthBar.value + "/" + healthBar.maxValue;
-        attackText.text = "DMG: " + playerHealth.playerCurrentDamage;
+        manaText.text = "MP: " + manaBar.value + "/" + manaBar.maxValue;
+        attackText.text = "ATK: " + playerHealth.playerCurrentDamage;
         defenseText.text = "DEF: " + playerHealth.playerCurrentDefense;
     }
 

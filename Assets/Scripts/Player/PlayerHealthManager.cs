@@ -7,6 +7,10 @@ public class PlayerHealthManager : MonoBehaviour {
 
     public int playerMaxHealth;
     public int playerCurrentHealth;
+
+    public int playerMaxMana;
+    public int playerCurrentMana;
+
     public int playerCurrentDamage;
     public int playerCurrentDefense;
 
@@ -15,9 +19,10 @@ public class PlayerHealthManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerCurrentHealth = playerMaxHealth;
+        playerCurrentMana = playerMaxMana;
         playerCurrentDamage = 5;
         playerCurrentDefense = 0;
-        sfxMan = FindObjectOfType<SFXManager>();
+    sfxMan = FindObjectOfType<SFXManager>();
 	}
 	
 	// Update is called once per frame
@@ -36,16 +41,35 @@ public class PlayerHealthManager : MonoBehaviour {
     public void setMaxHealth(){
         playerCurrentHealth = playerMaxHealth;
     }
+
+    public void ChangeMana(int change)
+    {
+        int newMana = playerCurrentMana + change;
+        if (newMana > playerMaxMana)
+        {
+            playerCurrentMana = playerMaxMana;
+        }
+        else if (newMana < 0)
+        {
+            playerCurrentMana = 0;
+        }
+        else
+        {
+            playerCurrentMana = newMana;
+        }
+    }
+    public void setMaxMana()
+    {
+        playerCurrentMana = playerMaxMana;
+    }
+
     // Used to increase player attack at shop
     public void setPlayerDamage(int amount)
     {
-        Debug.Log("inside setplayerdamage");
         playerCurrentDamage += amount;
     }
-    // Used to increase player damage at shop, subtract this amount from mobDamage
     public void setPlayerDefense()
     {
-        Debug.Log("inside setplayerdefense");
         playerCurrentDefense += 1;
     }
 }

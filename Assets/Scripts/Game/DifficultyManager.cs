@@ -23,7 +23,6 @@ public class DifficultyManager : MonoBehaviour
 
     public void changeDifficulty(string newDifficulty)
     {
-        Debug.Log("Called ChangeDifficulty");
         difficultyLevel = newDifficulty;
         sfxMan.ButtonClick.Play();
     }
