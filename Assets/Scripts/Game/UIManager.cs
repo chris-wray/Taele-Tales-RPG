@@ -35,9 +35,8 @@ public class UIManager : MonoBehaviour {
         healthBar.maxValue = playerHealth.playerMaxHealth;
         healthBar.value = playerHealth.playerCurrentHealth;
 
-        healthBar.maxValue = playerHealth.playerMaxHealth;
-        healthBar.value = playerHealth.playerCurrentHealth;
-
+        manaBar.maxValue = playerHealth.playerMaxMana;
+        manaBar.value = playerHealth.playerCurrentMana;
 
         HPText.text = "HP: " + healthBar.value + "/" + healthBar.maxValue;
         manaText.text = "MP: " + manaBar.value + "/" + manaBar.maxValue;

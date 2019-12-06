@@ -16,11 +16,6 @@ public class DifficultyManager : MonoBehaviour
         sfxMan = FindObjectOfType<SFXManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void changeDifficulty(string newDifficulty)
     {
         difficultyLevel = newDifficulty;

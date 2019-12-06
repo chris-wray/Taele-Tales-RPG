@@ -30,13 +30,10 @@ public class EnemyHealthManager : MonoBehaviour {
     void Update()
     {
 	// Check if this monster has died.
-        if (mobCurrentHealth <= 0 || diffMan.difficultyLevel == "Peaceful")
+        if (mobCurrentHealth <= 0)
         {
             gameObject.SetActive(false);
-            if (diffMan.difficultyLevel != "Peaceful")
-            {
-                Instantiate(coinDrop, transform.position, Quaternion.identity);
-            }
+            Instantiate(coinDrop, transform.position, Quaternion.identity);
         }
     }
     // Used by weapons to damage the enemy.

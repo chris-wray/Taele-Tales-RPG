@@ -47,7 +47,6 @@ public class DifficultyHoverButton : MonoBehaviour, IPointerEnterHandler, IPoint
     }
     public void OnClick()
     {
-        Debug.Log("Clicked");
         diffMan.changeDifficulty(dText.text);
     }
 }

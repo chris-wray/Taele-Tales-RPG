@@ -19,29 +19,30 @@ public class BattleHandler : MonoBehaviour
     //4 = enemy animations, 5 = player win,  player.GetComponent<PlayerControl>()
     //6 = enemy win, 7 = flee;
 
-    public int playerAction; //0 = attack, 1 = strong attack,
+    public int playerAction; //0 = attack, 1 = spell menu,
     //2 = defend, 3 = flee, 4 = none (continue waiting for input)
+    // 5 = heal spell, 6 = back to action menu
+    // 7 = Increase attack spell, 8 = damage spell
 
-    public int prevAction; //keeps track of player's previous action,
-    //because that action affects the monster's actions
-
-    public int mobDamage;
-    public int playerDamage; //integers to locally track the monster's and player's damage
-    public int playerDefense;
-    public int netDamage;//integer to store monster's damage minus player's defense, or 0 if it would be negative
+    //integers to locally track the monster's and player's stats
+    int mobAttack;
+    int playerAttack; 
+    int playerDefense;
 
     System.Random rand;//RNG to determine monster actions
 
-    public bool preparingAttack; //keeps track of whether the monster is preparing a strong attack
-
+    bool preparingAttack; //keeps track of whether the monster is preparing a strong attack
+    bool isPlayerDefending;
+    int offenseBuffCounter; // Counts how many turns of offense buff are left
     DifficultyManager diffMan;
+    int difficultyMultiplier;
 
     // Start is called before the first frame update
     void Start()
     {
         EndBattleButton.SetActive(false);
         rand = new System.Random();
-        state = 0; 
+        state = 0;
 
         //find the player object, which should be preserved from the previous scene
         player = GameObject.FindWithTag("Player");
@@ -50,24 +51,31 @@ public class BattleHandler : MonoBehaviour
         playerControl.StopForBattle();
         playerControl.enabled = false;
 
-        playerDamage = player.GetComponent<PlayerHealthManager>().playerCurrentDamage;
+        playerAttack = player.GetComponent<PlayerHealthManager>().playerCurrentDamage;
         playerDefense = player.GetComponent<PlayerHealthManager>().playerCurrentDefense;
 
         playerAction = 4;
 
         //find the enemy object, which should also be preserved from the previous scene
         enemy = GameObject.FindWithTag("Enemy");
-        mobDamage = enemy.GetComponent<EnemyHealthManager>().mobDamage;
-        //enemy.GetComponent<SlimeController>().Stop();
-        //enemy.GetComponent<SlimeController>().enabled = false;
-        //dText.text = "Enemy Health: " + enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth;
+        mobAttack = enemy.GetComponent<EnemyHealthManager>().mobDamage;
+
         preparingAttack = false;
+        isPlayerDefending = false;
+        offenseBuffCounter = 0;
 
         diffMan = FindObjectOfType<DifficultyManager>();
-        netDamage = mobDamage - playerDefense;
-        if(netDamage < 0)
+        switch (diffMan.difficultyLevel)
         {
-            netDamage = 0;
+            case "Peaceful":
+                difficultyMultiplier = 0;
+                break;
+            case "Hard":
+                difficultyMultiplier = 5;
+                break;
+            default: // Normal or undefined
+                difficultyMultiplier = 1;
+                break;
         }
     }
 
@@ -107,31 +115,13 @@ public class BattleHandler : MonoBehaviour
 
     void ResolvePlayerTurn()
     {
-        prevAction = playerAction; //set prevAction to playerAction so that monster attacks can respond to the player's previous actions
+        isPlayerDefending = false;
+        int baseDamage = 0;
+
         switch (playerAction)
         {
             case 0: //if player chooses to attack, deal playerDamage damage to enemy
-                enemy.GetComponent<EnemyHealthManager>().HurtEnemy(playerDamage);
-                Debug.Log(enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth);
-                if (enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth <= 0)
-                {
-                    state = 5; //if the monster dies, move to state 5, which is victory, or increment the state to continue the battle
-                }
-                else
-                {
-                    state++;
-                }
-                break;
-            case 1: //if player chooses to perform a strong attack, deal playerDamage*2 damage to enemy
-                enemy.GetComponent<EnemyHealthManager>().HurtEnemy(playerDamage * 2);
-                if (enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth <= 0)
-                {
-                    state = 5;
-                }
-                else
-                {
-                    state++;
-                }
+                baseDamage = 1;
                 break;
             case 2: //if player chooses to defend, increment the state
                 state++;
@@ -141,66 +131,108 @@ public class BattleHandler : MonoBehaviour
                 break;
             case 4: //if player has not chosen an action yet, do nothing
                 break;
+            case 5: // Heals player 20 HP
+                player.GetComponentInChildren<PlayerHealthManager>().AddHealth(20);
+                state++;
+                break;
+            case 7: // Adds attack buff
+                offenseBuffCounter += 4;
+                state++;
+                break;
+            case 8: // Strong magic attack
+                baseDamage = 5;
+                break;
         }
-        playerAction = 4;
+
+        if (baseDamage > 0)
+        {
+            // Player Damage formula
+            int damageDealt = playerAttack * baseDamage;
+            if (offenseBuffCounter > 0)
+            {
+                damageDealt = (int) (1.25 * damageDealt);
+            }
+
+            enemy.GetComponent<EnemyHealthManager>().HurtEnemy(damageDealt);
+            Debug.Log(enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth);
+            if (enemy.GetComponent<EnemyHealthManager>().mobCurrentHealth <= 0)
+            {
+                state = 5; //if the monster dies, move to state 5, which is victory, or increment the state to continue the battle
+            }
+            else
+            {
+                state++;
+            }
+        }
+
+        if (offenseBuffCounter > 0)
+        {
+            offenseBuffCounter--;
+        }
     }
 
     void ResolveMobTurn()
     {
+        int baseDamage = 1; // Normal attack strength
         if (preparingAttack)//if the enemy prepared a strong attack last turn, it does a strong attack that deals triple damage, or just normal damage when defended against.
         {
-            preparingAttack = false;
-            switch (prevAction) //depending on the player's previous action, the strong attack does varying amounts of damage
-            {
+            baseDamage = 5;
+        }
+        else if ((rand.Next(0, 5) == 0))
+        { // The enemy prepares a strong attack 20% of the time
+            preparingAttack = true;
+            dText.text = "The enemy prepares a strong attack. Defend yourself!";
+            state++;
+            playerAction = 4;
+            return;
+        }
 
-                case 0:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + netDamage * 3 + " damage to you.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 3);
-                    break;
-                case 1:
-                    dText.text = "The enemy attacks you with a strong attack! It deals " + netDamage * 6 + " damage to you. Ouch!";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 6);
-                    break;
-                case 2:
-                    dText.text = "The enemy attacks you! It deals " + netDamage + " damage to you, through your defense.";
-                    player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage);
-                    break;
-            }
-        }
-        else //if the enemy isn't performing a strong attack, it will either perform a normal attack or prepare a strong attack
+        int playerOverallDefense = playerDefense; // Defense with special attributes
+        if (isPlayerDefending)
         {
-            switch (rand.Next(0, 2)) //randomly determine the move used
-            {
-                case 0:
-                    switch (prevAction) //depending on the player's previous action, a normal attack does varying damage.
-                    {
-                        case 0:
-                            dText.text = "The enemy attacks you! It deals " + netDamage + " damage to you.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage);
-                            break;
-                        case 1:
-                            dText.text = "The enemy attacks you! It deals " + netDamage * 2 + " damage to you. Ouch!";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage * 2);
-                            break;
-                        case 2:
-                            dText.text = "The enemy attacks you! It deals " + netDamage / 2 + " damage to you, through your defense.";
-                            player.GetComponent<PlayerHealthManager>().HurtPlayer(netDamage / 2);
-                            break;
-                    }
-                    break;
-                case 1:
-                    dText.text = "The enemy prepares a strong attack! Defend yourself!";
-                    preparingAttack = true;
-                    break;
-            }
+            playerOverallDefense = playerOverallDefense * 2 + 4;
         }
+
+        // Enemy Damage formula
+        int damageDealt = (baseDamage * mobAttack - playerOverallDefense) * difficultyMultiplier;
+
+
+        if (damageDealt < 0)
+        {
+            damageDealt = 0;
+        }
+
+        if (preparingAttack)
+        {
+            preparingAttack = false;
+            dText.text = "The enemy unleashes a strong attack!";
+        }
+        else
+        {
+            dText.text = "The enemy attacks you!";
+        }
+
+        dText.text += " It deals " + damageDealt + " damage to you.";
+
+        if (damageDealt == 0)
+        {
+            dText.text += " That felt like nothing!";
+        }
+        else if (damageDealt > 20)
+        {
+            dText.text += " Ouch!";
+        }
+
+        player.GetComponent<PlayerHealthManager>().HurtPlayer(damageDealt);
+
         state++;
+        playerAction = 4;
     }
     
     // Reloads the scene prior to the battle
     void ReloadOverworld()
     {
-       playerControl.enabled = true; //allow the player to move
+        playerControl.enabled = true; //allow the player to move
         Application.LoadLevel(player.GetComponent<PlayerControl>().prevScene); //return to previous scene
         diffMan.difficultyPanel.SetActive(true);
 

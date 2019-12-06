@@ -6,31 +6,26 @@ using UnityEngine.EventSystems;
 
 public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public int value; //0 = basic attack, 1 = strong attack,
-    //2 = defend, 3 = flee
+    private SFXManager sfxMan;
+    private PlayerHealthManager playerHealth;
+    public GameObject SpellMenu;
+
+    public int value; //0 = basic attack, 1 = switch to spell menu,
+                      //2 = defend, 3 = flee
+                      // 5 = heal spell, 6 = back to action menu
+                      // 7 = Increase attack spell, 8 = damage spell
 
     public bool isActive; //keeps track of whether the button is held
     public BattleHandler bh; //the active BattleHandler
     public float time; //time the button has been held for
-    public Text dText; //the text box of the button
 
     // Start is called before the first frame update
     void Start()
     {
         isActive = false;
         time = 0.0f;
-        switch(value)
-        {
-            case 0:
-                dText.text = "Attack\n Deal " + bh.playerDamage + " damage to the enemy.";
-                break;
-            case 1:
-                dText.text = "Strong Attack\n Deal " + bh.playerDamage*2 + " damage to the enemy, but take double damage on their next turn.";
-                break;
-            case 2:
-                dText.text = "Defend\n Take less damage from incoming attacks.";
-                break;
-        }
+        sfxMan = FindObjectOfType<SFXManager>();
+        playerHealth = FindObjectOfType<PlayerHealthManager>();
     }
 
     // Update is called once per frame
@@ -51,8 +46,6 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         isActive = true;
-        //Debug.Log("Button held");
-        //dText.text = "Hovering over button for " + time + "seconds";
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -61,6 +54,55 @@ public class HoverButtonBattle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     }
     public void OnClick()
     {
-        bh.playerAction = value;
+        switch (value)
+        {
+            case 1: // Opens spell menu
+                SpellMenu.SetActive(true);
+                sfxMan.ButtonClick.Play();
+                break;
+            case 5: // Heal spell
+                if (playerHealth.playerCurrentMana >= 5)
+                {
+                    playerHealth.ChangeMana(-5);
+                    bh.playerAction = value;
+                    sfxMan.ButtonClick.Play();
+                } else
+                {
+                    sfxMan.PurchaseDenied.Play();
+                }
+                break;
+            case 6: // Closes spell menu
+                SpellMenu.SetActive(false);
+                sfxMan.ButtonClick.Play();
+                break;
+            case 7: // Attack spell
+                if (playerHealth.playerCurrentMana >= 3)
+                {
+                    playerHealth.ChangeMana(-3);
+                    bh.playerAction = value;
+                    sfxMan.ButtonClick.Play();
+                }
+                else
+                {
+                    sfxMan.PurchaseDenied.Play();
+                }
+                break;
+            case 8: // Damage spell
+                if (playerHealth.playerCurrentMana >= 7)
+                {
+                    playerHealth.ChangeMana(-7);
+                    bh.playerAction = value;
+                    sfxMan.ButtonClick.Play();
+                }
+                else
+                {
+                    sfxMan.PurchaseDenied.Play();
+                }
+                break;
+            default: // Other action
+                bh.playerAction = value;
+                sfxMan.ButtonClick.Play();
+                break;
+        }
     }
 }

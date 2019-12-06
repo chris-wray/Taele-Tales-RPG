@@ -1,19 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class RefillHealth : MonoBehaviour
+public class RefillMana : MonoBehaviour
 {
-
-    public AudioClip FailSound;
-    public AudioClip SuccessSound;
-    public AudioSource audioSource;
 
     private SFXManager sfxMan;
 
     MoneyManager money;
     public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,16 +22,13 @@ public class RefillHealth : MonoBehaviour
     {
         if (money.currentGold >= 5)
         {
-            Debug.Log("refill success");
             sfxMan.PurchaseAccepted.Play();
             money.AddMoney(-5);
-            player.GetComponent<PlayerHealthManager>().setMaxHealth();
+            player.GetComponent<PlayerHealthManager>().setMaxMana();
         }
         else
         {
-            Debug.Log("refill failed");
             sfxMan.PurchaseDenied.Play();
         }
-        audioSource.Play();
     }
 }

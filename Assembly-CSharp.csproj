@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Shop\IncreaseDefense.cs" />
     <Compile Include="Assets\Scripts\Shop\PanelOpener.cs" />
     <Compile Include="Assets\Scripts\Shop\RefillHealth.cs" />
+    <Compile Include="Assets\Scripts\Shop\RefillMana.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />

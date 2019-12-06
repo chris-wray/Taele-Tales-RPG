@@ -30,7 +30,6 @@ public class LoadNewArea : MonoBehaviour {
             Debug.Log("Entering new area: " + levelToLoad);
             thePlayer.startPointName = exitPoint;
             Application.LoadLevel(levelToLoad);
-
         }
     }
 }
