@@ -24,11 +24,11 @@ public class RefillHealth : MonoBehaviour
 
     public void Refill()
     {
-        if (money.currentGold >= 5)
+        if (money.currentGold >= 3)
         {
             Debug.Log("refill success");
             sfxMan.PurchaseAccepted.Play();
-            money.AddMoney(-5);
+            money.AddMoney(-3);
             player.GetComponent<PlayerHealthManager>().setMaxHealth();
         }
         else

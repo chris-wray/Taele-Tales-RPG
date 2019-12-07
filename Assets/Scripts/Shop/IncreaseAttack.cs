@@ -30,13 +30,13 @@ public class IncreaseAttack : MonoBehaviour
 
     public void UpdateAttack()
     {
-        // if player has more than 3 gold
-        if (money.currentGold >= 3)
+        // if player has more than 5 gold
+        if (money.currentGold >= 5)
         {
             Debug.Log("increase attack");
             sfxMan.PurchaseAccepted.Play();
 
-            money.AddMoney(-3);
+            money.AddMoney(-5);
             // increase playerCurrentDamage by 1; max health of mob is 15, max health of big mob is 25
             healthManager.setPlayerDamage(1);
         }

@@ -124,6 +124,7 @@ public class BattleHandler : MonoBehaviour
                 baseDamage = 1;
                 break;
             case 2: //if player chooses to defend, increment the state
+                isPlayerDefending = true;
                 state++;
                 break;
             case 3: //if player chooses to flee, set state to 7, which is the flee state
@@ -176,7 +177,7 @@ public class BattleHandler : MonoBehaviour
         int baseDamage = 1; // Normal attack strength
         if (preparingAttack)//if the enemy prepared a strong attack last turn, it does a strong attack that deals triple damage, or just normal damage when defended against.
         {
-            baseDamage = 5;
+            baseDamage = 3;
         }
         else if ((rand.Next(0, 5) == 0))
         { // The enemy prepares a strong attack 20% of the time

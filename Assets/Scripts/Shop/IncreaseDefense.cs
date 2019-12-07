@@ -29,12 +29,12 @@ public class IncreaseDefense : MonoBehaviour
     public void UpdateDefense()
     {
         // if player has more than 3 gold
-        if (money.currentGold >= 3)
+        if (money.currentGold >= 5)
         {
             Debug.Log("increase defense");
 
             sfxMan.PurchaseAccepted.Play();
-            money.AddMoney(-3);
+            money.AddMoney(-5);
             // increase playerCurrentDamage by 1; max damage of mob is 5, max damage of big mob is 10
             // if you want to check for that and then not allow player to purchase increase defense anymore
             // if(enemy.GetComponent<EnemyHealthManager>().mobDamage > 1) {}
