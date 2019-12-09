@@ -13,6 +13,8 @@ public class MusicController : MonoBehaviour
 
     public bool musicCanPlay;
 
+    private DifficultyManager diffMan;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,7 @@ public class MusicController : MonoBehaviour
         {
             musicTracks[currentTrack].Stop();
         }
-        
+
     }
 
     public void SwitchTrack(int newTrack)
